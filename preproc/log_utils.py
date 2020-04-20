@@ -9,7 +9,12 @@ import numpy as np
 from sklearn.metrics import recall_score, mean_absolute_error, f1_score,\
     accuracy_score
 
-from constants import *
+from constants import ABBC,AFCK,BOVE,CHCT,CLCK,FAAN,FALY,FANI,FARG,GOOP,HOER,HUCA,MPWS,OBRY,\
+    PARA,PECK,POMT,POSE,RANZ,SNES,THAL,THET,TRON,VEES,VOGO,WAST,\
+        ABBC_LABELS,AFCK_LABELS,BOVE_LABELS,CHCT_LABELS,CLCK_LABELS,FAAN_LABELS,FALY_LABELS,FANI_LABELS,FARG_LABELS, \
+        GOOP_LABELS,HOER_LABELS,HUCA_LABELS,MPWS_LABELS,OBRY_LABELS,PARA_LABELS,PECK_LABELS,POMT_LABELS,POSE_LABELS, \
+            RANZ_LABELS,SNES_LABELS,THAL_LABELS,THET_LABELS,TRON_LABELS,VEES_LABELS,VOGO_LABELS,WAST_LABELS, TASKS,\
+                SIM, DIV, RNN_CELL_TYPES
 import os
 
 
@@ -42,7 +47,8 @@ def postproc_stance(inds, placeholders, batch, p):
     return p
 
 
-def task2score(task, y_true, y_pred, topics):
+def task2score1(task, y_true, y_pred, topics):
+    '''
     if task == STANCE:
         return macro_averaged_pos_neg_f1_score(y_true, y_pred)
     if task == TOPIC:
@@ -53,7 +59,13 @@ def task2score(task, y_true, y_pred, topics):
         return accuracy_score(y_true, y_pred)
     if task in [TARGET]:
         return f1_score(y_true, y_pred, average='macro')
+    '''
+    return f1_score(y_true, y_pred, average='macro')
+    #return f1_score(y_true, y_pred, average='micro')
+
+def task2score2(task, y_true, y_pred, topics):
     return f1_score(y_true, y_pred, average='micro')
+
 
 
 def macro_averaged_pos_neg_f1_score(y_true, y_pred):

@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 def bicond_reader(placeholders, target_sizes, vocab_size, label_vocab_size, **options):
+    #print('*****************inside bicond_reader ***************************')
     emb_dim = options["emb_dim"]
     lab_emb_dim = options["lab_emb_dim"]
 
@@ -20,20 +21,28 @@ def bicond_reader(placeholders, target_sizes, vocab_size, label_vocab_size, **op
 
     with tf.variable_scope("embeddings"):
         embeddings = tf.get_variable("word_embeddings", [vocab_size, emb_dim], dtype=tf.float32, initializer=init)
-
+    
+    #print('embeddings done ')
+    
     with tf.variable_scope("embedders") as varscope:
         seq1_embedded = tf.nn.embedding_lookup(embeddings, seq1)
         varscope.reuse_variables()
         seq2_embedded = tf.nn.embedding_lookup(embeddings, seq2)
+
+    #print('embedders done')
 
     with tf.variable_scope("conditional_reader_seq1") as varscope1:
         # seq1_states: (c_fw, h_fw), (c_bw, h_bw)
         _, seq1_states = reader(seq1_embedded, placeholders['seq1_lengths'], emb_dim,
                             scope=varscope1, **options)
 
+    #print('conditional_reader_seq1 done')
+
     with tf.variable_scope("conditional_reader_seq2") as varscope2:
         varscope1.reuse_variables()
         outputs, states = reader(seq2_embedded, placeholders['seq2_lengths'], emb_dim, seq1_states, scope=varscope2, **options)
+    
+    #print('conditional_reader_seq2 done')
 
     # shape output: [batch_size, 2*emb_dim]
     if options["main_num_layers"] == 1:
@@ -96,6 +105,7 @@ def bicond_reader(placeholders, target_sizes, vocab_size, label_vocab_size, **op
                 loss_dict[k] = loss
                 predict_dict[k] = predict
 
+    #print('*********************End of bicond_reader*******************')
     return scores_dict, loss_dict, predict_dict, label_embeddings
 
 

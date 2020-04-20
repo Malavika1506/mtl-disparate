@@ -7,86 +7,132 @@ from sklearn.decomposition import PCA
 import tensorflow as tf
 import numpy as np
 
-from constants import FNC, STANCE, NLI, TOPIC, LAPTOP, RESTAURANT, TARGET,\
-    TOPIC_5WAY, STANCE_LABELS, FNC_LABELS, NLI_LABELS, TOPIC_LABELS, \
-    TOPIC_5WAY_LABELS, ABSA_LABELS, TARGET_LABELS
-
+from constants import ABBC,AFCK,BOVE,CHCT,CLCK,FAAN,FALY,FANI,FARG,GOOP,HOER,HUCA,MPWS,OBRY,\
+    PARA,PECK,POMT,POSE,RANZ,SNES,THAL,THET,TRON,VEES,VOGO,WAST,\
+        ABBC_LABELS,AFCK_LABELS,BOVE_LABELS,CHCT_LABELS,CLCK_LABELS,FAAN_LABELS,FALY_LABELS,FANI_LABELS,FARG_LABELS, \
+        GOOP_LABELS,HOER_LABELS,HUCA_LABELS,MPWS_LABELS,OBRY_LABELS,PARA_LABELS,PECK_LABELS,POMT_LABELS,POSE_LABELS, \
+            RANZ_LABELS,SNES_LABELS,THAL_LABELS,THET_LABELS,TRON_LABELS,VEES_LABELS,VOGO_LABELS,WAST_LABELS, TASKS,\
+                SIM, DIV, RNN_CELL_TYPES
 
 def task2labels(task):
-    if task == STANCE:
-        return STANCE_LABELS
-    if task == FNC:
-        return FNC_LABELS
-    if task == NLI:
-        return NLI_LABELS
-    if task == TOPIC:
-        return TOPIC_LABELS
-    if task == TOPIC_5WAY:
-        return TOPIC_5WAY_LABELS
-    if task in [LAPTOP, RESTAURANT]:
-        return ABSA_LABELS
-    if task == TARGET:
-        return TARGET_LABELS
+    if task == ABBC:
+        return ABBC_LABELS
+    if task == AFCK:
+        return AFCK_LABELS
+    if task == BOVE:
+        return BOVE_LABELS
+    if task == CHCT:
+        return CHCT_LABELS
+    if task == CLCK:
+        return CLCK_LABELS
+    if task == FAAN:
+        return FAAN_LABELS
+    if task == FALY:
+        return FALY_LABELS
+    if task == FANI:
+        return FANI_LABELS
+    if task == FARG:
+        return FARG_LABELS
+    if task == GOOP:
+        return GOOP_LABELS
+    if task == HOER:
+        return HOER_LABELS
+    if task == HUCA:
+        return HUCA_LABELS
+    if task == MPWS:
+        return MPWS_LABELS
+    if task == OBRY:
+        return OBRY_LABELS
+    if task == PARA:
+        return PARA_LABELS
+    if task == PECK:
+        return PECK_LABELS
+    if task == POMT:
+        return POMT_LABELS
+    if task == POSE:
+        return POSE_LABELS
+    if task == RANZ:
+        return RANZ_LABELS
+    if task == SNES:
+        return SNES_LABELS
+    if task == THAL:
+        return THAL_LABELS
+    if task == THET:
+        return THET_LABELS
+    if task == TRON:
+        return TRON_LABELS
+    if task == VEES:
+        return VEES_LABELS
+    if task == VOGO:
+        return VOGO_LABELS
+    if task == WAST:
+        return WAST_LABELS
     raise ValueError('No labels available for task %s.' % task)
 
 
 def task2display_name(task):
-    if task == STANCE:
-        return 'Stance'
-    if task == FNC:
-        return 'FNC-1'
-    if task == NLI:
-        return 'MultiNLI'
-    if task == TOPIC:
-        return 'Topic-2'
-    if task == TOPIC_5WAY:
-        return 'Topic-5'
-    if task == LAPTOP:
-        return 'ABSA-L'
-    if task == RESTAURANT:
-        return 'ABSA-R'
-    if task == TARGET:
-        return 'Target'
+    if task == ABBC:
+        return "abbc"
+    if task == AFCK:
+        return "afck"
+    if task == BOVE:
+        return "bove"
+    if task == CHCT:
+        return "chct"
+    if task == CLCK:
+        return "clck"
+    if task == FAAN:
+        return "faan"
+    if task == FALY:
+        return "faly"
+    if task == FANI:
+        return "fani"
+    if task == FARG:
+        return "farg"
+    if task == GOOP:
+        return "goop"
+    if task == HOER:
+        return "hoer"
+    if task == HUCA:
+        return "huca"
+    if task == MPWS:
+        return "mpws"
+    if task == OBRY:
+        return "obry"
+    if task == PARA:
+        return "para"
+    if task == PECK:
+        return "peck"
+    if task == POMT:
+        return "pomt"
+    if task == POSE:
+        return "pose"
+    if task == RANZ:
+        return "ranz"
+    if task == SNES:
+        return "snes"
+    if task == THAL:
+        return "thal"
+    if task == THET:
+        return "thet"
+    if task == TRON:
+        return "tron"
+    if task == VEES:
+        return "vees"
+    if task == VOGO:
+        return "vogo"
+    if task == WAST:
+        return "wast"
     raise ValueError('%s is not a valid task.' % task)
 
 
 def task2color(task):
-    if task == TOPIC:
-        return 'forestgreen'
-    if task == TOPIC_5WAY:
-        return 'yellowgreen'
-    if task == LAPTOP:
-        return 'cornflowerblue'
-    if task == RESTAURANT:
-        return 'mediumblue'
-    if task == STANCE:
-        return 'midnightblue'
-    if task == TARGET:
-        return 'saddlebrown'
-    if task == FNC:
-        return 'darkgoldenrod'
-    if task == NLI:
-        return 'slategray'
-    raise ValueError('%s is not available.' % task)
+    return 'midnightblue'
+    #raise ValueError('%s is not available.' % task)
 
 
 def label2display_name(label):
-    if label in ['AGAINST', 'FAVOR', 'NONE']:
-        return label.lower()
-    try:
-        label = float(label)
-        if label == 0:
-            return 'neutral'
-        if label == -1:
-            return 'negative'
-        if label == -2:
-            return 'highly negative'
-        if label == 1:
-            return 'positive'
-        if label == 2:
-            return 'highly positive'
-    except:
-        return label
+    
     return label
 
 
@@ -136,19 +182,20 @@ def plot_embedding(X, y, tasks, title=None, file_name=None):
     plt.figure(figsize=(5,5))
     ax = plt.subplot(111)
     for i in range(X.shape[0]):
-        if tasks[i] == STANCE:
+        #if tasks[i] == STANCE:
             # skip stance and plot later
-            continue
+            #continue
         plt.text(X[i, 0], X[i, 1], label2display_name(str(y[i])),
                  color=task2color(tasks[i]),
                  fontdict={'weight': 'bold', 'size': 9})
-
+    '''
     for i in range(X.shape[0]):
         if tasks[i] == STANCE:
             plt.text(X[i, 0], X[i, 1], label2display_name(str(y[i])),
                      color=task2color(tasks[i]),
                      fontdict={'weight': 'bold', 'size': 9})
-
+    '''
+    
     # create patches for the legend
     patches = []
     for task in sorted(list(set(tasks))):

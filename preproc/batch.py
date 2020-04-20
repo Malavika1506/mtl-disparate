@@ -160,6 +160,8 @@ def get_batches(data, batch_size=32, pad=0, bucket_order=None, bucket_structure=
 
 def get_feed_dicts(data_train_np, placeholders, batch_size, inst_length):
     data_train_batched = []
+    #print(inst_length)
+    #print(type(inst_length))
     realsamp = int(inst_length/batch_size)
     additionsamp = inst_length%batch_size
     if additionsamp != 0:
@@ -171,6 +173,7 @@ def get_feed_dicts(data_train_np, placeholders, batch_size, inst_length):
     start = 0
     for i in range(0, realsamp):
         batch_i = {}
+        x={}
         if i != 0:
             start = i * batch_size
         if i != realsamp:
@@ -181,8 +184,16 @@ def get_feed_dicts(data_train_np, placeholders, batch_size, inst_length):
         for key, value in data_train_np.items():
             #print(key)
             #print(data_train_np[key])
+            #I put this if statement on 14/4 at 2.24am
+            #print((value))
+            #print(type(value))
+            #if len(value)!=0:
             batch_i[placeholders[key]] = [data_train_np[key][ii] for ii in ids_sup]
-
+                #x[placeholders[key]]=(batch_i[placeholders[key]])
+                #print(type(batch_i[placeholders[key]]))
+            #else:
+                #batch_i[placeholders[key]] = x[placeholders[key]]
+                
         data_train_batched.append(batch_i)
 
     return data_train_batched

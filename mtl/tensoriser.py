@@ -132,6 +132,11 @@ def load_data(placeholders, target_labels, target_sizes, **options):
         dev_feed_dicts[task] = get_feed_dicts(
             dev_data, placeholders, batch_size=batch_size,
             inst_length=len(dev_data["seq1"]))
+        #print(task)
+        #print('batch_size: ************')
+        #print(batch_size)
+        #print('len(test_data["seq1"]): ************')
+        #print(len(test_data["seq1"]))
         test_feed_dicts[task] = get_feed_dicts(
             test_data, placeholders, batch_size=batch_size,
             inst_length=len(test_data["seq1"]))

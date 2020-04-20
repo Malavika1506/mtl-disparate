@@ -4,7 +4,8 @@ import numpy as np
 from mtl.nn import bicond_reader, relabel_model
 import os
 from sklearn.metrics import classification_report
-from preproc.log_utils import log_results, task2score, postproc_stance
+from preproc.log_utils import log_results, task2score1, task2score2, postproc_stance
+#from preproc.log_utils import log_results, task2score
 from sklearn.metrics import f1_score
 from copy import deepcopy
 from constants import TASK_NAMES_SHORT
@@ -31,6 +32,8 @@ def balanced_mtl_training_loop(placeholders, target_sizes, train_feed_dicts, dev
                                min_op, logits_dict, loss_dict, preds_dict, sess, **options):
     # trains a MTL model, samples equal amounts of training data from each task and weighs the updates equally
     # early stopping based on main task dev set
+    
+    #print('*****************Start of balanced_mtl_training_loop*****************')
 
     max_epochs = options["max_epochs"]
     main_task = options["main_task"]
@@ -45,16 +48,26 @@ def balanced_mtl_training_loop(placeholders, target_sizes, train_feed_dicts, dev
         task2total, task2correct_dev_all = defaultdict(float), defaultdict(float)
         task2total_dev = defaultdict(float)
         for task, batch in batch_iter(target_sizes, max_iter, train_feed_dicts):
+            #print('Entering sess.run([min_op[task], loss_dict[task], preds_dict[task], feed_dict=batch)')
             _, current_loss, p = sess.run([min_op[task], loss_dict[task], preds_dict[task]], feed_dict=batch)
+            #print(' Done with sess.run() for task:', task)
             task2loss_all[task].extend(current_loss)
             hits = [pp for ii, pp in enumerate(p) if np.argmax(pp) == np.argmax(batch[placeholders["targets"]][ii])]
+            #print('len(hits):**********')
+            #print(len(hits))
             task2correct_all[task] += len(hits)
+            #print('len(batch[placeholders["targets"]]): *******')
+            #print(len(batch[placeholders["targets"]]))
             task2total[task] += len(batch[placeholders["targets"]])
-
+       
+        #print('Out of sess.run()')
+       
         for task in target_sizes.keys():
             if options['dev_res_during_training']:
+                #print('********* dev_res_during_training 1: *******************')
                 p_inds_dev, g_inds_dev = [], []
                 for j, batch_dev in enumerate(dev_feed_dicts[task]):
+                    #print('Entering sess.run(preds_dict[task], feed_dict=batch_dev)')
                     p_dev = sess.run(preds_dict[task], feed_dict=batch_dev)
 
                     # this is for super detailed results -- maybe we don't want to print this every epoch later on
@@ -76,6 +89,7 @@ def balanced_mtl_training_loop(placeholders, target_sizes, train_feed_dicts, dev
             acc = task2correct_all[task] / task2total[task]
             acc_dev = 0
             if options['dev_res_during_training']:
+                #print('**** dev_res_during_training 2: *****************')
                 acc_dev = task2correct_dev_all[task] / task2total_dev[task]
             if task != main_task:
                 print('Epoch %d :' % i, "Task: " + task, "Loss: ", np.mean(task2loss_all[task]), "Acc: ", acc, "Acc Dev: ",
@@ -96,7 +110,8 @@ def balanced_mtl_training_loop(placeholders, target_sizes, train_feed_dicts, dev
                 main_task_dev_acc.append(acc_dev)
         if stopping_criteron_reached == True:
             break
-
+    
+    #print('************ End of balanced_mtl_training_loop************************')
     return logits_dict, loss_dict, preds_dict
 
 
@@ -347,8 +362,8 @@ def train(placeholders, target_sizes, train_feed_dicts, dev_feed_dicts, vocab, l
         label_vocab_len = len(label_vocab)
 
     # create model
+    #print('***************** Start of bicond_reader ***************************')
     logits_dict, loss_dict, preds_dict, label_embeddings = bicond_reader(placeholders, target_sizes, len(vocab), label_vocab_len, **options)  # those return dicts where the keys are the task names
-
     optim = tf.train.RMSPropOptimizer(learning_rate=options["learning_rate"])
 
     if options["model_type"] == "semi-supervised" or options["model_type"] == "label-transfer":
