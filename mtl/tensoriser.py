@@ -34,9 +34,9 @@ def load_data(placeholders, target_labels, target_sizes, **options):
             total_preds_ltn += len(data_train["labels"])
 
         # add data for creating data features
-        feature_data[task] = data_train.get("seq2", []) +\
-            data_dev.get("seq2", []) +\
-            data_test.get("seq2", [])
+        feature_data[task] = data_train.get("seq2", []) + data_train.get("seq3", [])+ data_train.get("seq4", []) + data_train.get("seq5", []) + \
+            data_dev.get("seq2", []) +data_dev.get("seq3", [])+ data_dev.get("seq4", [])+data_dev.get("seq5", [])+\
+            data_test.get("seq2", [])+data_test.get("seq3", [])+ data_test.get("seq4", []) + data_test.get("seq5", [])
 
         label_to_labelvocab_task = None
         if options["lab_emb_dim"] != 0:
@@ -145,20 +145,20 @@ def load_data(placeholders, target_labels, target_sizes, **options):
 
 
 def prepare_data(placeholders, data, vocab=None, label_vocab=None, label_to_labelvocab=None):
-    data_tokenized = deep_map(data, tokenize, ['seq1', 'seq2'])
-    data_lower = deep_seq_map(data_tokenized, lower, ['seq1', 'seq2'])
-    data = deep_seq_map(data_lower, lambda xs: ["<SOS>"] + xs + ["<EOS>"], ["seq1", "seq2"])
+    data_tokenized = deep_map(data, tokenize, ['seq1', 'seq2','seq3','seq4','seq5'])
+    data_lower = deep_seq_map(data_tokenized, lower, ['seq1', 'seq2','seq3','seq4','seq5'])
+    data = deep_seq_map(data_lower, lambda xs: ["<SOS>"] + xs + ["<EOS>"], ["seq1", "seq2","seq3", "seq4", "seq5"])
     if vocab is None:
         vocab = Vocab()
-        for instance in data["seq1"] + data["seq2"]:
+        for instance in data["seq1"] + data["seq2"]+data["seq3"] +data["seq4"] +data["seq5"] :
             for token in instance:
                 vocab(token)
 
     data = map_to_targets(data, "labels", "stance")  # map stance IDs to one-hot vectors, save in data["targets"]
     if label_vocab != None: # then we want label embeddings
         data["label_vocab_inds"] = [label_to_labelvocab for inst in data["targets"]]
-    data_ids = deep_map(data, vocab, ["seq1", "seq2"])
-    data_ids = deep_seq_map(data_ids, lambda xs: len(xs), keys=['seq1', 'seq2'], fun_name='lengths', expand=True)
+    data_ids = deep_map(data, vocab, ["seq1", "seq2","seq3", "seq4", "seq5" ])
+    data_ids = deep_seq_map(data_ids, lambda xs: len(xs), keys=['seq1', 'seq2','seq3','seq4','seq5'], fun_name='lengths', expand=True)
 
     # removing data that's not a placeholder
     popl = []

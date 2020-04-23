@@ -68,74 +68,74 @@ def task2data_reader(task):
     raise ValueError('No data reader available for %s.' % task)
 
 
-def readABBC(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readABBC(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("abbc",ABBC_LABELS)
-def readAFCK(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readAFCK(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("afck",AFCK_LABELS)
-def readBOVE(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readBOVE(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("bove",BOVE_LABELS)
-def readCHCT(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readCHCT(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("chct",CHCT_LABELS)
-def readCLCK(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readCLCK(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("clck",CLCK_LABELS)
-def readFAAN(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readFAAN(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("faan",FAAN_LABELS)
-def readFALY(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readFALY(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("faly",FALY_LABELS)
-def readFANI(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readFANI(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("fani",FANI_LABELS)
-def readFARG(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readFARG(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("farg",FARG_LABELS)
-def readGOOP(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readGOOP(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("goop",GOOP_LABELS)
-def readHOER(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readHOER(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("hoer",HOER_LABELS)
-def readHUCA(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readHUCA(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("huca",HUCA_LABELS)
-def readMPWS(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readMPWS(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("mpws",MPWS_LABELS)
-def readOBRY(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readOBRY(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("obry",OBRY_LABELS)
-def readPARA(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readPARA(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("para",PARA_LABELS)
-def readPECK(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readPECK(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("peck",PECK_LABELS)
-def readPOMT(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readPOMT(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("pomt",POMT_LABELS)
-def readPOSE(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readPOSE(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("pose",POSE_LABELS)
-def readRANZ(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readRANZ(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("ranz",RANZ_LABELS)
-def readSNES(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readSNES(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("snes",SNES_LABELS)
-def readTHAL(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readTHAL(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("thal",THAL_LABELS)
-def readTHET(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readTHET(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("thet",THET_LABELS)
-def readTRON(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readTRON(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("tron",TRON_LABELS)
-def readVEES(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readVEES(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("vees",VEES_LABELS)
-def readVOGO(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readVOGO(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("vogo",VOGO_LABELS)
-def readWAST(datafolder="./data/evidence_ranked/",debug=True,num_instances=270):
+def readWAST(datafolder="./data/meta_domain_evi/",debug=True,num_instances=270):
     return read_task("wast",WAST_LABELS)
 
 
 
 
-def read_task(task, labels, datafolder="./data/evidence_ranked/", debug=True, num_instances=270):
+def read_task(task, labels, datafolder="./data/meta_domain_evi/", debug=True, num_instances=270):
     stance=[]
     folder= ((task))+'/'
 
-    data_train = {"seq1": [], "seq2": [], "stance": [], "labels": []}
+    data_train = {"seq1": [], "seq2": [], "seq3": [], "seq4": [], "seq5": [], "stance": [], "labels": []}
     data_train = parse1(datafolder+folder, "train.csv", data_train, debug, num_instances)
     
-    data_dev = {"seq1": [], "seq2": [], "stance": [], "labels": []}
+    data_dev = {"seq1": [], "seq2": [], "seq3": [], "seq4": [], "seq5": [], "stance": [], "labels": []}
     data_dev = parse1(datafolder+folder, "dev.csv", data_dev, debug, num_instances)
     
     #stance=data_train["stance"]
-    data_test = {"seq1": [], "seq2": [], "stance": [], "labels": []}
+    data_test = {"seq1": [], "seq2": [], "seq3": [], "seq4": [], "seq5": [], "stance": [], "labels": []}
     data_test = parse1(datafolder+folder, "test.csv", data_test, debug, num_instances)
     
     #print(sorted(data_train["labels"]))
@@ -149,6 +149,7 @@ def read_task(task, labels, datafolder="./data/evidence_ranked/", debug=True, nu
     #print(task)
     #print(sorted(labels))
     #print(data_test["labels"])
+    
     '''
     print(data_train)
     print('*********************************************')
@@ -161,6 +162,9 @@ def read_task(task, labels, datafolder="./data/evidence_ranked/", debug=True, nu
 
 def parse1(datafolder, datafile_bodies,  data_dict, debug, num_instances):
     id2body = {}
+    id2body3 = {}
+    id2body4 = {}
+    id2body5 = {}
     with open(os.path.join(datafolder, datafile_bodies), 'r', encoding='utf-8') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',')
         i = -1
@@ -168,28 +172,30 @@ def parse1(datafolder, datafile_bodies,  data_dict, debug, num_instances):
             i += 1
             if i == 0:
                 continue
-            k, domain,claimID,claim,snippet,label = row 
-            '''
-            # claim and evidence or evidence_ranked
-            id2body[claimID] = snippet
-            
+                
+           	#k, domain,claimID,claim,label,speaker,checker,entities=row
+
+            k, 	domain,	claimID,	claim,	snippet,	label,	speaker,	checker,	entities=row 
+            id2body[claimID] = entities
+            id2body3[claimID] = speaker
+            id2body4[claimID] = checker
+            id2body5[claimID] = snippet
+
+
             data_dict["seq1"].append(claim)
             data_dict["seq2"].append(id2body[claimID])
+            data_dict["seq3"].append(id2body3[claimID])
+            data_dict["seq4"].append(id2body4[claimID])
+            data_dict["seq5"].append(id2body5[claimID])
             data_dict["stance"].append(label)
-            '''
-            # Claim - only
-            id2body[claimID] = claim
-            
-            data_dict["seq1"].append(claimID)
-            data_dict["seq2"].append(id2body[claimID])
-            data_dict["stance"].append(label)
-            
-
 
     for lab in set(data_dict["stance"]):
         data_dict["labels"].append(lab)
 
     return data_dict
+
+
+
 
 
 

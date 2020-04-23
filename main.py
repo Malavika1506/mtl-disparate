@@ -108,16 +108,16 @@ def main(**options):
 
             
             acc_test = correct_test_all/total_test
-            print('Test performance :', "Task: " + task, "Acc: ", acc_test)
+            #print('Test performance :', "Task: " + task, "Acc: ", acc_test)
             
             macro_score = task2score1(task, g_inds, p_inds, topics)
             micro_score = task2score2(task, g_inds, p_inds, topics)
 
-            print('macro_score:', macro_score)
-            print('micro_score:', micro_score)
+            #print('macro_score:', macro_score)
+            #print('micro_score:', micro_score)
 
-            print(target_labels[task])
-            print(classification_report(g_inds, p_inds))
+            #print(target_labels[task])
+            #print(classification_report(g_inds, p_inds))
             
             #log_results(options, micro_score, macro_score, acc_test, task)
 
@@ -126,35 +126,33 @@ def main(**options):
                 macro_score_ltn = task2score1(task, g_inds, p_inds_ltn, topics)
                 micro_score_ltn = task2score2(task, g_inds, p_inds_ltn, topics)
                 #task_score_ltn = task2score1(task, g_inds, p_inds_ltn, topics)
-                print('Test performance LTN:', "Task: " + task, "Acc: ", acc_test_ltn)
-                print('macro_score LTN:', macro_score_ltn)
-                print('micro_score LTN:', micro_score_ltn)
-                print(target_labels[task])
-                print(classification_report(g_inds, p_inds_ltn))
+                #print('Test performance LTN:', "Task: " + task, "Acc: ", acc_test_ltn)
+                #print('macro_score LTN:', macro_score_ltn)
+                #print('micro_score LTN:', micro_score_ltn)
+                #print(target_labels[task])
+                #print(classification_report(g_inds, p_inds_ltn))
                 log_results(options, micro_score_ltn, macro_score_ltn, acc_test_ltn, task)
             else:
                 log_results(options, micro_score, macro_score, acc_test, task)
-
-            '''
-
-            acc_test_ltn = 0.
-            #if options["model_type"] == "semi-supervised" or options["model_type"] == "label_transfer":
-            
-            '''
+        
         
                 
 for i in TASKS:
 
-    #Resetting tensorflow models 
     tf.reset_default_graph()
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
-    #Initialising tf
     seq1 = tf.placeholder(tf.int32, [None, None], name="seq1")
     seq1_lengths = tf.placeholder(tf.int32, [None], name="seq1_lengths")
     seq2 = tf.placeholder(tf.int32, [None, None], name="seq2")
     seq2_lengths = tf.placeholder(tf.int32, [None], name="seq2_lengths")
+    seq3 = tf.placeholder(tf.int32, [None, None], name="seq3")
+    seq3_lengths = tf.placeholder(tf.int32, [None], name="seq3_lengths")
+    seq4 = tf.placeholder(tf.int32, [None, None], name="seq4")
+    seq4_lengths = tf.placeholder(tf.int32, [None], name="seq4_lengths")
+    seq5 = tf.placeholder(tf.int32, [None, None], name="seq5")
+    seq5_lengths = tf.placeholder(tf.int32, [None], name="seq5_lengths")
     targets = tf.placeholder(tf.int32, [None, None], name="targets")
     targets_main = tf.placeholder(tf.int32, [None, None], name="targets_main")  # targets for main task
     features = tf.placeholder(tf.float32, [None, None], name="features")
@@ -171,14 +169,20 @@ for i in TASKS:
     target_labels = {ABBC:[],AFCK:[],BOVE:[],CHCT:[],CLCK:[],FAAN:[],FALY:[],FANI:[],FARG:[],GOOP:[],HOER:[],HUCA:[], MPWS:[],OBRY:[],PARA:[],PECK:[],POMT:[],POSE:[],RANZ:[],SNES:[],THAL:[],THET:[],TRON:[],VEES:[],VOGO:[],WAST:[]}
 
     placeholders = {"seq1": seq1, "seq1_lengths": seq1_lengths, "seq2": seq2,
-                    "seq2_lengths": seq2_lengths, "targets": targets, "targets_main": targets_main,
+                    "seq2_lengths": seq2_lengths, "seq3": seq3,
+                    "seq3_lengths": seq3_lengths, "seq4": seq4,
+                    "seq4_lengths": seq4_lengths, "seq5": seq5,
+                    "seq5_lengths": seq5_lengths, "targets": targets, "targets_main": targets_main,
                     "features": features, "preds_for_ltn": preds_for_ltn,
                     "label_vocab_inds": label_vocab_inds, "label_vocab_inds_main": label_vocab_inds_main}
-             
+
 
     if __name__ == "__main__":
 
-        #options
+        #i = TASKS[8]
+
+        
+
         parser = argparse.ArgumentParser(description='Train and Evaluate a MTL model with incompatible outputs')
         parser.add_argument('--debug', default=False, action='store_true', help="Debug mode -- for this, only a small portion of the data is used to test code functionality")
         parser.add_argument('--dev_res_during_training', default=False, action='store_true', help="If true, computes results on dev set during training")
@@ -217,8 +221,8 @@ for i in TASKS:
         parser.add_argument('--save_model', default=False
         , action='store_true', help="Save model after end of training")
         parser.add_argument('--exp_id', type=str, default="run1", help="Experiment ID. In case the same experiment with the same configurations needs to be run more than once.")
-        parser.add_argument('--features-path', type=str, default='./results/only_claim/'+i+'/saved_features_new', help='the directory where the computed features are saved')
-        parser.add_argument('--log_file', type=str, default="./results/only_claim/"+i+"/log.txt", help='the path to which results should be logged')
+        parser.add_argument('--features-path', type=str, default='./previous/meta_domain_claim_evidence/'+i+'/saved_features_new', help='the directory where the computed features are saved')
+        parser.add_argument('--log_file', type=str, default="./previous/meta_domain_claim_evidence/"+i+"/log.txt", help='the path to which results should be logged')
         parser.add_argument('--alternate_batches', default=True, action='store_true', help='alternate tasks between batches instead of between epochs during training') 
         parser.add_argument('--plot_embeddings', action='store_true', help='plot label embeddings of trained model')
 
@@ -235,5 +239,3 @@ for i in TASKS:
             print("The model type 'label-transfer' needs to be used for this to work. Changing it to that setting.")
             args.model_type = 'label-transfer'
         main(**vars(args))
-
-    

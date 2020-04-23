@@ -12,6 +12,15 @@ def bicond_reader(placeholders, target_sizes, vocab_size, label_vocab_size, **op
     # [batch_size, max_seq2_length]
     seq2 = placeholders['seq2']
 
+    # [batch_size, max_seq3_length]
+    seq3 = placeholders['seq3']
+
+    # [batch_size, max_seq4_length]
+    seq4 = placeholders['seq4']
+
+    # [batch_size, max_seq5_length]
+    seq5 = placeholders['seq5']
+
     # [batch_size, labels_size]
     targets = tf.to_float(placeholders['targets'])
 
@@ -28,21 +37,37 @@ def bicond_reader(placeholders, target_sizes, vocab_size, label_vocab_size, **op
         seq1_embedded = tf.nn.embedding_lookup(embeddings, seq1)
         varscope.reuse_variables()
         seq2_embedded = tf.nn.embedding_lookup(embeddings, seq2)
+        varscope.reuse_variables()
+        seq3_embedded = tf.nn.embedding_lookup(embeddings, seq3)
+        varscope.reuse_variables()
+        seq4_embedded = tf.nn.embedding_lookup(embeddings, seq4)
+        varscope.reuse_variables()
+        seq5_embedded = tf.nn.embedding_lookup(embeddings, seq5)
 
     #print('embedders done')
 
     with tf.variable_scope("conditional_reader_seq1") as varscope1:
         # seq1_states: (c_fw, h_fw), (c_bw, h_bw)
-        _, seq1_states = reader(seq1_embedded, placeholders['seq1_lengths'], emb_dim,
-                            scope=varscope1, **options)
+        _, seq1_states = reader(seq1_embedded, placeholders['seq1_lengths'], emb_dim,scope=varscope1, **options)
 
     #print('conditional_reader_seq1 done')
 
     with tf.variable_scope("conditional_reader_seq2") as varscope2:
         varscope1.reuse_variables()
-        outputs, states = reader(seq2_embedded, placeholders['seq2_lengths'], emb_dim, seq1_states, scope=varscope2, **options)
+        outputs, seq2_states = reader(seq2_embedded, placeholders['seq2_lengths'], emb_dim, seq1_states, scope=varscope2, **options)
     
-    #print('conditional_reader_seq2 done')
+    with tf.variable_scope("conditional_reader_seq3") as varscope3:
+        varscope2.reuse_variables()
+        outputs, seq3_states = reader(seq3_embedded, placeholders['seq3_lengths'], emb_dim, seq2_states, scope=varscope3, **options)
+    
+    with tf.variable_scope("conditional_reader_seq4") as varscope4:
+        varscope3.reuse_variables()
+        outputs, seq4_states = reader(seq4_embedded, placeholders['seq4_lengths'], emb_dim, seq3_states, scope=varscope4, **options)
+    
+    with tf.variable_scope("conditional_reader_seq5") as varscope5:
+        varscope4.reuse_variables()
+        outputs, states = reader(seq5_embedded, placeholders['seq5_lengths'], emb_dim, seq4_states, scope=varscope5, **options)
+    
 
     # shape output: [batch_size, 2*emb_dim]
     if options["main_num_layers"] == 1:
