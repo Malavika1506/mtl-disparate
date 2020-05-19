@@ -1,4 +1,5 @@
-# mtl-disparate with multiFC dataset
+Fake News Classification of Multi-source Dataset with DisparateLabel Space Using Multi-task Learning and Label Embedding
+This is the code repository for the final project of course: DAT550, Spring 2020. 
 
 Requirements:
 
@@ -9,17 +10,18 @@ Requirements:
 
 Data organisation:
 
-Please download the data folder from the .zip file in the mail and replace it with this data folder. 
+- Due to confidentiality issues, the data is not included here. But it can be found at: https://competitions.codalab.org/competitions/21163#learn_the_details 
 
-- Foldername: data/meta_domain_evi -- has each domain/task specific train,dev and test dataframes. (claim+evidence+meta)
-- preproc/data_reader.py tests if the data readers work.
-
+- preproc/data_reader.py tests if the data readers work. But this works only on our preprocessed data which will be provided on request. 
+- The folder /explore has the python scripts used for the data exploratory works. 
 
 Steps to run:
 
-- main.py trains models
+- Run main.py 
 
+This folder consists of the code to run the best performing model variant: claim+evidence+meta
+PS: There are totally 6 variants: claim_only, claim+evidence and claim+evidence_ranked and claim_only+meta, claim+evidence+meta and claim+evidence_ranked+meta 
 
-PS: This is the one with the best scores out of all 6 variants: claim_only, claim+evidence and claim+evidence_ranked and claim_only+meta, claim+evidence+meta and claim+evidence_ranked+meta 
+Results:
 
-Note: Still in progress
+- The domain-wise F1 Macro and Micro scores for all 6 variants can be found in scores.xlsx 

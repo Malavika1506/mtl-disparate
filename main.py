@@ -192,21 +192,21 @@ for i in TASKS:
         parser.add_argument('--main_task', type=str, default=i, help="The main task.")
         parser.add_argument('--feature_sets', nargs='+', help='data feature sets. In the paper, only diversity features are tested.', default=DIV)
         parser.add_argument('--ltn_pred_type', type=str, help='Whether to use hard or soft predictions as input to LTN model. In the experiments described in the paper, only soft predictions are used.', default='soft')
-        parser.add_argument('--main_num_layers', type=int, help='If > 1, number of hidden layer for main model.', default=1)
-        parser.add_argument('--lel_hid_size', type=int, help='If > 0, size of hidden layer for label embedding layer, as described in Section 3.2 of the paper.', default=0)
+        parser.add_argument('--main_num_layers', type=int, help='If > 1, number of hidden layer for main model.', default=2)
+        parser.add_argument('--lel_hid_size', type=int, help='If > 0, size of hidden layer for label embedding layer, as described in Section 3.2 of the paper.', default=2)
         parser.add_argument('--model_type', default='label-transfer', choices={'hard-sharing', 'label-transfer', 'semi-supervised'}, help="What model variant to use: "
                                                                                             "'hard-sharing' is the MTL with hard parameter sharing model (Section 3.1), "
                                                                                             "'label-transfer' is the label transfer network (Section 3.3), "
                                                                                             "'semi-supervised' is the semi-supervised MTL (Section 3.4)")
         parser.add_argument('--relabel_with_ltn', default=False, action='store_true', help="Only relevant for semi-supervised model: do we actually use it to relabel data or not. The latter can be used for debugging purposes. "
                                                                                         "Otherwise, this is the semi-supervised variant of the LTN described in Section 3.4 of the paper")
-        parser.add_argument('--task_specific_layer_size', type=int, default=1, help="If >0, adds a task-specific hidden layer with that size and skip-connections")
-        parser.add_argument('--batch_size', type=int, default=16, help="What batch size should be used")
+        parser.add_argument('--task_specific_layer_size', type=int, default=2, help="If >0, adds a task-specific hidden layer with that size and skip-connections")
+        parser.add_argument('--batch_size', type=int, default=32, help="What batch size should be used")
         parser.add_argument('--max_epochs', type=int, default=1, help="What is the maximum number of epochs to train main model for")
         parser.add_argument('--max_epochs_ltn', type=int, default=2, help="What is the maximum number of epochs to train LTN model for")
         parser.add_argument('--max_epochs_after_ltn', type=int, default=0, help="After we've trained the relabelling function, how many epochs should we train for with augmented data.")
-        parser.add_argument('--early_stopping', type=float, default=1.0, help="Threshold for early stopping on dev set of main task. If 1.0, there is no early stopping.")
-        parser.add_argument('--emb_dim', type=int, default=16, help="What embedding size should be used")
+        parser.add_argument('--early_stopping', type=float, default=3.0, help="Threshold for early stopping on dev set of main task. If 1.0, there is no early stopping.")
+        parser.add_argument('--emb_dim', type=int, default=128, help="What embedding size should be used")
         parser.add_argument('--lab_emb_dim', type=int, default=16, help='What embedding size should be used for the label embeddings. If 0, no label embeddings are used.')
         parser.add_argument('--lab_embs_for_ltn', default=False, action='store_true', help='Whether to use label embeddings for relabelling function or not.')
         parser.add_argument('--skip_connections', default=False, action='store_true', help='Skip connections for the RNN or not')
@@ -221,10 +221,11 @@ for i in TASKS:
         parser.add_argument('--save_model', default=False
         , action='store_true', help="Save model after end of training")
         parser.add_argument('--exp_id', type=str, default="run1", help="Experiment ID. In case the same experiment with the same configurations needs to be run more than once.")
-        parser.add_argument('--features-path', type=str, default='./previous/meta_domain_claim_evidence/'+i+'/saved_features_new', help='the directory where the computed features are saved')
-        parser.add_argument('--log_file', type=str, default="./previous/meta_domain_claim_evidence/"+i+"/log.txt", help='the path to which results should be logged')
+        parser.add_argument('--features-path', type=str, default='./results/meta_claim_rvi/'+i+'/saved_features_new', help='the directory where the computed features are saved')
+        parser.add_argument('--log_file', type=str, default="./results/meta_claim_evi/"+i+"/log.txt", help='the path to which results should be logged')
         parser.add_argument('--alternate_batches', default=True, action='store_true', help='alternate tasks between batches instead of between epochs during training') 
         parser.add_argument('--plot_embeddings', action='store_true', help='plot label embeddings of trained model')
+
 
         args = parser.parse_args()
         if args.debug:

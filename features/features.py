@@ -166,7 +166,11 @@ def get_term_dist(docs, word2id, lowercase=True):
                 term_dist[word2id[word]] += 1
 
     # normalize absolute freqs to obtain a relative frequency term distribution
-    term_dist /= np.sum(term_dist)
+    #print(np.sum(term_dist))
+    if np.sum(term_dist)!=0.0:
+        term_dist /= np.sum(term_dist)
+    else: 
+        term_dist = [1.0]
     if np.isnan(np.sum(term_dist)):
         # the sum is nan if docs only contains one document and that document
         # has no words in the vocabulary
@@ -271,7 +275,11 @@ def number_of_word_types(example):
 
 def type_token_ratio(example):
     """Calculates the type-token ratio of the example."""
-    return number_of_word_types(example) / len(example)
+    if len(example)!=0:
+        a=number_of_word_types(example) / len(example)
+    else:
+        a=number_of_word_types(example)
+    return a
 
 
 def entropy(example, train_term_dist, word2id):

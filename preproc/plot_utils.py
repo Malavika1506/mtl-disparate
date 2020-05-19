@@ -127,12 +127,47 @@ def task2display_name(task):
 
 
 def task2color(task):
+    '''
+    if task == TOPIC:
+        return 'forestgreen'
+    if task == TOPIC_5WAY:
+        return 'yellowgreen'
+    if task == LAPTOP:
+        return 'cornflowerblue'
+    if task == RESTAURANT:
+        return 'mediumblue'
+    if task == STANCE:
+        return 'midnightblue'
+    if task == TARGET:
+        return 'saddlebrown'
+    if task == FNC:
+        return 'darkgoldenrod'
+    if task == NLI:
+        return 'slategray'
+    '''
     return 'midnightblue'
     #raise ValueError('%s is not available.' % task)
 
 
 def label2display_name(label):
-    
+    '''
+    if label in ['AGAINST', 'FAVOR', 'NONE']:
+        return label.lower()
+    try:
+        label = float(label)
+        if label == 0:
+            return 'neutral'
+        if label == -1:
+            return 'negative'
+        if label == -2:
+            return 'highly negative'
+        if label == 1:
+            return 'positive'
+        if label == 2:
+            return 'highly positive'
+    except:
+        return label
+    '''    
     return label
 
 
